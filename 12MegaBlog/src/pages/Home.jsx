@@ -8,12 +8,16 @@ function Home() {
     const userData = useSelector((state) => state.auth.userData);
 
     useEffect(() => {
-        appwriteService.getPosts().then((posts) => {
-            if (posts) {
-                setPosts(posts.documents)
-            }
-        })
-    }, [])
+        if (userData) {
+            appwriteService.getPosts().then((posts) => {
+                if (posts) {
+                    setPosts(posts.documents)
+                }
+            })
+        } else {
+            setPosts([]);
+        }
+    }, [userData])
   
     if (posts.length === 0) {
         return (
